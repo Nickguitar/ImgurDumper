@@ -1,0 +1,60 @@
+<!-- Por Nicholas Ferreira - 22/05/20 -->
+<title>Imgur Dumper</title>
+<link rel=icon type=image/png href=https://s.imgur.com/images/favicon-32x32.png sizes=32x32>
+<style>#BertrandRussell{text-align:center;}</style>
+<body bgcoloR="#29292e">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
+<script>
+function zoom(id){	// zoom displayed image on click
+	var img = document.getElementById(id);
+	var original = img.naturalWidth;
+	if(img.width !== original){
+		img.style.width = original;
+	}else{
+		img.style.width = 200;
+	}
+}
+function randomString(j) {	// gera uma string (5 chars) aleatória e monta URL com ela
+	var chars = "ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghiklmnopqrstuvwxyz0123456789";
+	var randomstring = '';
+	for (var i=0; i<5; i++) {
+		var rnum = Math.floor(Math.random() * chars.length);
+		randomstring += chars.substring(rnum,rnum+1);
+	}
+	var imagem = document.createElement("img");
+	var url = "https://i.imgur.com/"+randomstring+".png";
+	imagem.setAttribute('src', url);
+	imagem.setAttribute('width', '200px');
+	imagem.setAttribute('id', j);
+	imagem.setAttribute("onclick", "zoom("+ j +")");
+
+	var img = new Image();
+	img.onload = function() {
+	  if((this.width > 161 || this.height > 100)){	// vários links não existem ou foram apagados, e isso gera uma imagem com 161x81;
+	    document.body.appendChild(imagem); // se a imagem atual não tiver essas dimensões, exibe
+	  }else{
+	  	randomString(j); // se tiver, gera outra
+	  }
+	}
+	img.src = url;
+}
+
+function lo0p(n){
+    for(i=0;i<n;cont++,i++){
+      randomString(cont);
+    }
+}
+var qtd = 30, cont = 0;
+
+div = document.createElement("div");
+
+div.setAttribute("id", "BertrandRussell");
+lo0p(qtd);
+document.body.appendChild(div);
+window.onscroll = function(ev) {	// scroll infinito
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight-300){	// se faltar 300px pra acabar a página, carrega mais
+        lo0p(qtd);
+    }
+};
+</script>
+<!-- Por Nicholas Ferreira - 22/05/20 -->
